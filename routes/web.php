@@ -35,3 +35,9 @@ Route::get('/', function(){
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/users', function(){
+    //$users = \App\User::all();
+    $users = \App\User::paginate(50);
+    return view('users.index') -> with(['users'=> $users]);
+});
