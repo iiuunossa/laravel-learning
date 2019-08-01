@@ -71,6 +71,9 @@
   </tbody> 
 </table>
 </div>
+<div class="pagination justify-content-center">
+  {{$tasks->links()}}
+</div>
 
 
 
