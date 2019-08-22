@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use \App\Task;
 use \App\Type;
+
 
 class TaskController extends Controller
 {
@@ -72,12 +74,13 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-   
+        //return $request -> all();
         $validate =[
             'type_id' => 'required',
             'name' => 'required|max:5',
-            'status' => 'required'
-    
+            'status' => 'required',
+            'file_upload' => 'required|mimes:pdf,jpg,jpeg|max:1024'
+            
         ];
         $messageError = [
             'type_id.required' => 'เลือกประเภทงาน',
@@ -85,7 +88,9 @@ class TaskController extends Controller
             'name.max' => 'กรอกได้ไม่เกิน 5 ตัวอักษร'
         ];
     
-  
+    
+    
+     
         $request->validate($validate,$messageError);
         $task = new \App\Task();
         $task->type_id = $request->input('type_id');
@@ -95,6 +100,20 @@ class TaskController extends Controller
         $task->user_id = $user_id;
         $task->completed =$request->input('status');
         $task->save(); 
+
+        if ($request->hasFile('file_upload'))
+        {
+            $path = $request->file('file_upload')->storeAS('public/tasks',
+                                    $request->file('file_upload')->getClientOriginalName());
+            //return Storage::url($path);
+            $file = pathinfo($path);
+            $task->file = $file ['basename'];
+            $task->update();
+            
+            return Storage::download($path);
+        }else{
+            return 'no file';
+        }
     
         return redirect('show');
     }

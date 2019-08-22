@@ -3,10 +3,10 @@
 
 <div class="container">
 @if(isset($task))
-    <form action="{{url('/tasks',$task->id)}}" method="post">
+    <form action="{{url('/tasks',$task->id)}}" method="post" enctype="multipart/form-data"> 
     <input type="hidden" name="_method" value="PATCH"> 
 @else
-    <form action="save" method="post">
+    <form action="save" method="post" enctype="multipart/form-data">
 @endif
     <input type="hidden" name="_token" value="{{ csrf_token() }}"> </br> 
 
@@ -54,6 +54,13 @@
         <input type="text" class="form-control" id="detail" name="detail"  value="{{old('detail',isset($task) ? $task -> detail:'')}}">
       </div>
     </div>
+
+    <div class="form-group">
+      <label for="detail"><b>File:</b></label>
+      <input type="file" name="file_upload"
+    </div>
+
+
     <div class="form-group row">
       <label for="name" class="col-sm-2 col-form-label"><b>User</b></label>
       <div class="col-sm-10">
