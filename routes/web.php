@@ -41,3 +41,10 @@ Route::get('/users', function(){
     $users = \App\User::paginate(50);
     return view('users.index') -> with(['users'=> $users]);
 });
+
+
+
+
+Route::get('/loadcsv','LoadcsvController@index');
+
+Route::post('/loadcsv','LoadcsvController@store');

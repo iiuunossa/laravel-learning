@@ -78,8 +78,8 @@ class TaskController extends Controller
         $validate =[
             'type_id' => 'required',
             'name' => 'required|max:5',
-            'status' => 'required',
-            'file_upload' => 'required|mimes:pdf,jpg,jpeg|max:1024'
+            'status' => 'required'
+            // 'file_upload' => 'required|mimes:pdf,jpg,jpeg|max:1024'
             
         ];
         $messageError = [
@@ -112,7 +112,7 @@ class TaskController extends Controller
             
             return Storage::download($path);
         }else{
-            return 'no file';
+            return redirect('show');
         }
     
         return redirect('show');

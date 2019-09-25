@@ -55,11 +55,12 @@
       </div>
     </div>
 
-    <div class="form-group">
-      <label for="detail"><b>File:</b></label>
-      <input type="file" name="file_upload"
+    <div class="form-group row">
+        <label for="file" class="col-sm-2 col-form-label"><b>File Upload</b></label>
+          <div class="col-sm-10">
+          <input type="file" class="form-control" id="file" name="file">
+          </div>
     </div>
-
 
     <div class="form-group row">
       <label for="name" class="col-sm-2 col-form-label"><b>User</b></label>
