@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use \App\Loadcsv;
+use \App\Timestamp;
 
 class LoadcsvController extends Controller
 {
@@ -47,12 +48,16 @@ class LoadcsvController extends Controller
             $file = pathinfo($path);
             $upload->file = $file ['basename'];
             $upload->update();
+
+            $time_stamps = new \App\Imports\TimeStampsImport();
+            $time_stamps->import(storage_path('app/' .$path));
             
             return Storage::url($path);
+            // return redirect()->back()-with()
         }else{
             return redirect('loadcsv');
         }
-    
+        
     }
 
     /**
